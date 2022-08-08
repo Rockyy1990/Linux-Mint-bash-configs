@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 echo "----------------------------------------------------"
 echo "Linux Mint configuration.."
@@ -6,13 +6,16 @@ echo ""
 echo "Unnötige Pakete entfernen plus nützliche hinzufügen"
 echo "----------------------------------------------------"
 sleep 4
+clear
 
+echo "System update & upgrade"
 sudo apt autoremove -y hexchat redshift celluloid rhythmbox
 sudo dpkg --add-architecture i386  
 sudo apt update  
 sudo apt dist-upgrade -y
 clear
-sudo apt install -y gedit gedit-plugins ntpdate libvulkan1 libvulkan1:i386 pavucontrol apulse build-essential plymouth-x11 mint-meta-codecs libfaac0 libfaudio0 x265 h264enc x264 vlc audacity flac alac-decoder gstreamer1.0-crystalhd gnome-disk-utility ubuntu-restricted-extras gsmartcontrol preload libgdiplus indicator-cpufreq cpufrequtils dkms hardinfo bleachbit yt-dlp neofetch 
+
+sudo apt install -y gnome-text-editor ntpdate libvulkan1 libvulkan1:i386 pavucontrol apulse build-essential plymouth-x11 mint-meta-codecs libfaac0 libfaudio0 x265 h264enc x264 vlc audacity flac alac-decoder gnome-disk-utility ubuntu-restricted-extras gsmartcontrol preload libgdiplus indicator-cpufreq cpufrequtils dkms hardinfo bleachbit yt-dlp neofetch 
 sudo ufw enable
 
 sudo bash -c "echo neofetch >> /etc/bashrc"
