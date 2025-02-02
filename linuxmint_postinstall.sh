@@ -8,6 +8,24 @@ echo "                                              "
 echo "----------------------------------------------"
 sleep 1
 
+echo ""
+echo "The following programs will be installed:"
+echo "1. WineHQ Staging"
+echo "2. Linux Xanmod Kernel"
+echo "3. System Packages: f2fs-tools, xfsdump, samba, curl, vulkan-tools, libfsntfs1t64, git, mintupgrade"
+echo "4. Windows Imaging Tools: wimtools, winregfs, boot-repair, os-uninstaller"
+echo "5. Multimedia Codecs: ffmpeg, lame, flac, x264, x265, sox, libsox-fmt-mp3, libsox-fmt-ao, vpx-tools, speex"
+echo "6. Various Programs: file-roller, winff, vlc, strawberry, transmission, yt-dlp"
+echo "7. Steam Gaming Platform: steam, wine-binfmt, libwinpr3-3, libfaudio0, libgdiplus, protontricks, proton-caller, libvkd3d1, libvkd3d-shader1, goverlay"
+echo ""
+echo "The following configurations will be made:"
+echo "1. Add i386 architecture support"
+echo "2. Add various PPAs for graphics drivers, apps, Pipewire, and WirePlumber"
+echo "3. Set up the Xanmod kernel repository"
+echo "4. Enable fstrim.timer for SSD maintenance"
+echo "5. Create a Timeshift backup"
+sleep 2
+echo ""
 read -p "Read this script before execute!!"
 clear
 
@@ -49,12 +67,24 @@ sudo apt install --install-recommends winehq-staging
 sudo apt install -y linux-xanmod-x64v3
 
 
-sudo apt install -y file-roller f2fs-tools xfsdump samba curl
-sudo apt install -y synaptic wayland-protocols gsmartcontrol fakeroot winbind  
-sudo apt install -y ffmpeg lame flac x264 x265 sox libsox-fmt-mp3 libsox-fmt-ao 
-sudo apt install -y easyeffects pavucontrol pipewire-v4l2 pipewire-libcamera vlc-plugin-pipewire
-sudo apt install -y soundconverter vlc strawberry transmission yt-dlp
-sudo apt install -y steam libfaudio0 libgdiplus protontricks
+# Install system packages
+sudo apt install -y f2fs-tools xfsdump samba curl vulkan-tools libfsntfs1t64 git mintupgrade 
+sudo apt install -y synaptic gnome-firmware wayland-protocols gsmartcontrol fakeroot winbind libnss-winbind 
+
+# Windows imaging tools
+sudo apt install -y wimtools winregfs boot-repair os-uninstaller
+
+# Installs Multimedia Codes
+sudo apt install -y ffmpeg lame flac x264 x265 sox libsox-fmt-mp3 libsox-fmt-ao vpx-tools speex
+sudo apt install -y easyeffects pavucontrol pipewire-v4l2 pipewire-libcamera vlc-plugin-pipewire pipewire-vulkan
+
+# Install various Programs
+sudo apt install -y file-roller winff vlc strawberry transmission yt-dlp
+
+# Install Steam Gaming Platform 
+sudo apt install -y steam wine-binfmt libwinpr3-3 libfaudio0 libgdiplus protontricks proton-caller libvkd3d1 libvkd3d-shader1 goverlay
+
+
 
 sudo apt upgrade -y
 sudo apt dist-upgrade -y
@@ -71,10 +101,13 @@ flatpak update
 flatpak install flathub com.github.tchx84.Flatseal
 flatpak install flathub com.discordapp.Discord
 flatpak install flathub net.davidotek.pupgui2
-flatpak install flathub ru.linux_gaming.PortProton
+flatpak install flathub com.usebottles.bottles
+flatpak install flathub org.strawberrymusicplayer.strawberry
+
+
+
+
 
 sudo timeshift --create
 
 sudo reboot
-
-
