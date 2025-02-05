@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Last Edit: 05.02.2025
+
 echo ""
 echo "----------------------------------------------"
 echo "     ..Linux Mint config after install..      "
@@ -35,7 +37,7 @@ echo ""
 echo -e " Remove unneeded packages.."
 sleep 2
 
-sudo apt autoremove -y firefox celluloid rhythmbox hypnotix redshift pix pix-data transmission-gtk zfs-zed zfsutils-linux libzfs4linux 
+sudo apt autoremove -y rhythmbox hypnotix redshift pix pix-data transmission-gtk zfs-zed zfsutils-linux libzfs4linux 
 sudo apt remove --purge -y libreoffice*
 echo ""
 
@@ -93,21 +95,24 @@ wget -qO - https://dl.xanmod.org/archive.key | sudo gpg --dearmor -vo /etc/apt/k
 echo 'deb [signed-by=/etc/apt/keyrings/xanmod-archive-keyring.gpg] http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-release.list
 
 sudo apt update
+sudo apt install -y linux-xanmod-x64v3
 clear
 
 sudo apt install --install-recommends winehq-staging
 clear
 
-sudo apt install -y linux-xanmod-x64v3
-clear
-
 
 echo -e "Install system packages"
 sleep 2
-sudo apt install -y build-essential f2fs-tools xfsdump samba curl vulkan-tools libfsntfs1t64 git mintupgrade zenity 
+sudo apt install -y build-essential curl f2fs-tools xfsdump samba curl vulkan-tools libfsntfs1t64 git mintupgrade zenity 
 sudo apt install -y synaptic gnome-firmware wayland-protocols gsmartcontrol fakeroot winbind libnss-winbind ttf-mscorefonts-installer
 
 echo "fastfetch" | sudo tee -a ~/.bashrc
+
+#echo -e "Liquorix Kernel"
+#sleep 1
+#curl -s 'https://liquorix.net/install-liquorix.sh' | sudo bash
+#clear
 
 
 echo -e "Windows imaging tools"
@@ -128,7 +133,8 @@ clear
 
 echo -e "Install Steam Gaming Platform" 
 sleep 2
-sudo apt install -y steam wine-binfmt libwinpr3-3 libfaudio0 libgdiplus protontricks proton-caller libvkd3d1 libvkd3d-shader1 goverlay
+sudo apt install -y steam wine-binfmt libwinpr3-3 libfaudio0 libgdiplus 
+sudo apt install -y protontricks proton-caller libvkd3d1 libvkd3d-shader1 goverlay
 clear
 
 
@@ -145,9 +151,7 @@ flatpak install -y flathub net.davidotek.pupgui2
 flatpak install -y flathub com.usebottles.bottles
 flatpak install -y flathub org.libreoffice.LibreOffice
 flatpak install -y flathub org.strawberrymusicplayer.strawberry
-flatpak install -y flathub net.waterfox.waterfox
 flatpak install -y flathub io.github.giantpinkrobots.varia
-flatpak install -y flathub io.github.celluloid_player.Celluloid
 clear
 
 echo ""
@@ -165,9 +169,6 @@ sudo apt clean
 
 # Clean up temporary files
 sudo rm -rf /tmp/*
-
-# Clean up log files
-sudo find /var/log -type f -exec sudo truncate -s 0 {} \;
 clear
 
 sudo systemctl enable fstrim.timer
@@ -176,56 +177,66 @@ clear
 
 echo ""
 echo -e "Set environment variables "
-echo ""
-sleep 1
-    echo -e "
-   CPU_LIMIT=0
-   CPU_GOVERNOR=performance
-   GPU_USE_SYNC_OBJECTS=1
-   SHARED_MEMORY=1
-   PYTHONOPTIMIZE=1
-   ELEVATOR=noop
-   TRANSPARENT_HUGEPAGES=always
-   MALLOC_CONF=background_thread:true
-   MALLOC_CHECK=0
-   MALLOC_TRACE=0
-   LD_DEBUG_OUTPUT=0
-   AMD_VULKAN_ICD=RADV
-   RADV_PERFTEST=aco,sam,nggc
-   RADV_DEBUG=novrsflatshading
-   STEAM_RUNTIME_HEAVY=1
-   STEAM_FRAME_FORCE_CLOSE=0
-   GAMEMODE=1
-   vblank_mode=1
-   PROTON_LOG=0
-   PROTON_USE_WINED3D=0
-   PROTON_FORCE_LARGE_ADDRESS_AWARE=1
-   PROTON_NO_ESYNC=1
-   DXVK_ASYNC=1
-   WINE_FULLSCREEN_FSR=1
-   WINE_VK_USE_FSR=1
-   MESA_BACK_BUFFER=ximage
-   MESA_NO_DITHER=1
-   MESA_SHADER_CACHE_DISABLE=false
-   mesa_glthread=true
-   MESA_DEBUG=0
-   LIBGL_DEBUG=0
-   LIBGL_NO_DRAWARRAYS=0
-   LIBGL_THROTTLE_REFRESH=1
-   LIBC_FORCE_NOCHECK=1
-   LIBGL_DRI3_DISABLE=1
-   __GLVND_DISALLOW_PATCHING=1
-   __GL_THREADED_OPTIMIZATIONS=1
-   __GL_SYNC_TO_VBLANK=1
-   __GL_SHADER_DISK_CACHE=0
-   __GL_YIELD=NOTHING
-   VK_LOG_LEVEL=error
-   VK_LOG_FILE=/dev/null
-   ANV_ENABLE_PIPELINE_CACHE=1
-   LESSSECURE=1
-   PAGER=less
-   EDITOR=nano
-   VISUAL=nano
+echo -e "
+CPU_LIMIT=0
+CPU_GOVERNOR=performance
+GPU_USE_SYNC_OBJECTS=1
+PYTHONOPTIMIZE=1
+ELEVATOR=kyber
+TRANSPARENT_HUGEPAGES=always
+MALLOC_CONF=background_thread:true
+MALLOC_CHECK=0
+MALLOC_TRACE=0
+LD_DEBUG_OUTPUT=0
+LP_PERF=no_mipmap,no_linear,no_mip_linear,no_tex,no_blend,no_depth,no_alphatest
+AMD_VULKAN_ICD=RADV
+RADV_PERFTEST=aco,sam,nggc
+RADV_DEBUG=novrsflatshading
+STEAM_RUNTIME_HEAVY=1
+STEAM_FRAME_FORCE_CLOSE=0
+GAMEMODE=1
+vblank_mode=1
+PROTON_LOG=0
+PROTON_USE_WINED3D=0
+PROTON_FORCE_LARGE_ADDRESS_AWARE=1
+PROTON_NO_ESYNC=1
+PROTON_USE_FSYNC=1
+DXVK_ASYNC=1
+WINE_FSR_OVERRIDE=1
+WINE_FULLSCREEN_FSR=1
+WINE_VK_USE_FSR=1
+WINEFSYNC_FUTEX2=1
+WINEFSYNC_SPINCOUNT=24
+MESA_BACK_BUFFER=ximage
+MESA_NO_DITHER=0
+MESA_SHADER_CACHE_DISABLE=false
+mesa_glthread=true
+MESA_DEBUG=0
+GALLIUM_DRIVER=zink
+GALLIUM_NOSW=1
+MESA_VK_ENABLE_SUBMIT_THREAD=1
+STAGING_SHARED_MEMORY=1
+STAGING_AUDIO_PERIOD=13333
+STAGING_RT_PRIORITY_BASE=2
+ANV_ENABLE_PIPELINE_CACHE=1
+LIBGL_DEBUG=0
+LIBGL_NO_DRAWARRAYS=0
+LIBGL_THROTTLE_REFRESH=1
+LIBC_FORCE_NOCHECK=1
+__GLX_VENDOR_LIBRARY_NAME=mesa
+__GLVND_DISALLOW_PATCHING=0
+__GL_THREADED_OPTIMIZATIONS=1
+__GL_SYNC_TO_VBLANK=1
+__GL_SHADER_DISK_CACHE=0
+__GL_YIELD=USLEEP
+__GL_MaxFramesAllowed=1
+__GL_VRR_ALLOWED=0
+VK_LOG_LEVEL=error
+VK_LOG_FILE=/dev/null
+LESSSECURE=1
+PAGER=less
+EDITOR=nano
+VISUAL=nano
 " | sudo tee -a /etc/environment
 sleep 2
 clear
@@ -242,6 +253,79 @@ sleep 1
 gsettings set org.cinnamon.desktop.interface icon-theme 'Mint-L'
 gsettings set org.cinnamon.desktop.interface gtk-theme 'Mint-L-Darker'
 clear
+
+echo -e "Enable tmpfs ramdisk"
+sudo sed -i -e '/^\/\/tmpfs/d' /etc/fstab
+echo -e "
+tmpfs /var/tmp tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/log tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/run tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/lock tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/cache tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/volatile tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /var/spool tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /media tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+tmpfs /dev/shm tmpfs nodiratime,nodev,nosuid,mode=1777 0 0
+" | sudo tee -a /etc/fstab
+clear
+
+## Set some ulimits to unlimited
+echo -e "
+* soft nofile 524288
+* hard nofile 524288
+root soft nofile 524288
+root hard nofile 524288
+* soft as unlimited
+* hard as unlimited
+root soft as unlimited
+root hard as unlimited
+* soft memlock unlimited
+* hard memlock unlimited
+root soft memlock unlimited
+root hard memlock unlimited
+* soft core unlimited
+* hard core unlimited
+root soft core unlimited
+root hard core unlimited
+* soft nproc unlimited
+* hard nproc unlimited
+root soft nproc unlimited
+root hard nproc unlimited
+* soft sigpending unlimited
+* hard sigpending unlimited
+root soft sigpending unlimited
+root hard sigpending unlimited
+* soft stack unlimited
+* hard stack unlimited
+root soft stack unlimited
+root hard stack unlimited
+* soft data unlimited
+* hard data unlimited
+root soft data unlimited
+root hard data unlimited
+" | sudo tee /etc/security/limits.conf
+
+## Set realtime to unlimited
+echo -e "
+@realtime - rtprio 99
+@realtime - memlock unlimited
+" | sudo tee -a /etc/security/limits.conf
+
+
+echo -e "Enable compose cache on disk"
+sudo mkdir -p /var/cache/libx11/compose
+mkdir -p /home/$USER/.compose-cache
+touch /home/$USER/.XCompose
+
+
+## Improve NVME
+if $(find /sys/block/nvme[0-9]* | grep -q nvme); then
+    echo -e "options nvme_core default_ps_max_latency_us=0" | sudo tee /etc/modprobe.d/nvme.conf
+fi
+
+## Improve PCI latency
+sudo setpci -v -d *:* latency_timer=48 >/dev/null 2>&1
+
 
 echo ""
 echo -e "Creating timeshift backup.."
