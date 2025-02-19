@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Last Edit: 05.02.2025
+# Last Edit: 19.02.2025
 
 echo ""
 echo "----------------------------------------------"
@@ -21,7 +21,7 @@ echo "7. Steam Gaming Platform: steam, wine-binfmt, libwinpr3-3, libfaudio0, lib
 echo ""
 echo "The following configurations will be made:"
 echo "1. Add i386 architecture support"
-echo "2. Add various PPAs for graphics drivers, apps, Pipewire, and WirePlumber"
+echo "2. Add various PPAs for graphics drivers, apps"
 echo "3. Set up the Xanmod kernel repository"
 echo "4. Enable fstrim.timer for SSD maintenance"
 echo "5. Set /etc/environment variables"
@@ -37,8 +37,9 @@ echo ""
 echo -e " Remove unneeded packages.."
 sleep 2
 
-sudo apt autoremove -y rhythmbox hypnotix redshift pix pix-data transmission-gtk zfs-zed zfsutils-linux libzfs4linux 
+sudo apt autoremove -y hypnotix redshift pix pix-data transmission-gtk zfs-zed zfsutils-linux libzfs4linux 
 sudo apt remove --purge -y libreoffice*
+sudo apt remove --purge -y rhythmbox*
 echo ""
 
 echo "Remove mintinstall"
@@ -63,9 +64,9 @@ wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo gpg --dearmor -o /
 sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
 
 
-echo -e "Up to date graphics driver"
+echo -e "Latest point release of Mesa plus select non-invasive early backports"
 sleep 1
-sudo add-apt-repository -y ppa:oibaf/graphics-drivers
+sudo add-apt-repository -y ppa:kisak/kisak-mesa
 clear
 
 echo -e "Extra up to date Apps"
@@ -73,15 +74,6 @@ sleep 1
 sudo add-apt-repository -y ppa:xtradeb/apps
 clear
 
-echo -e "Latest Pipewire"
-sleep 1
-sudo add-apt-repository -y ppa:pipewire-debian/pipewire-upstream
-clear
-
-echo -e "Latest WirePlumber"
-sleep 1
-sudo add-apt-repository -y ppa:pipewire-debian/wireplumber-upstream
-clear
 
 echo -e "Fastfetch"
 sleep 1
